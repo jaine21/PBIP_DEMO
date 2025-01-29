@@ -1,0 +1,38 @@
+table dProblema
+	lineageTag: 9bb37be5-662b-432a-9f25-1f877ba2e7b5
+
+	column 'ID problema'
+		dataType: int64
+		formatString: 0
+		lineageTag: b3336599-a95f-4f0e-8aa0-cda7acde551c
+		summarizeBy: none
+		sourceColumn: ID problema
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Problema
+		dataType: string
+		lineageTag: 9125c39d-89f8-4625-a821-79de7bd855ef
+		summarizeBy: none
+		sourceColumn: Problema
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dProblema = m
+		mode: import
+		source =
+				let
+				    Fonte = Excel.Workbook(File.Contents("C:\Users\Jaine\Documents\4. SAC\Base SAC.xlsx"), null, true),
+				    dProblema_Table = Fonte{[Item="dProblema",Kind="Table"]}[Data],
+				    #"Tipo Alterado" = Table.TransformColumnTypes(dProblema_Table,{{"ID problema", Int64.Type}, {"Problema", type text}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

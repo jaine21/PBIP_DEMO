@@ -1,0 +1,103 @@
+table dUsuario
+	lineageTag: 5656a8be-6ce1-4bf7-9a77-c66f3d5bf68e
+
+	column 'ID Usuario'
+		dataType: int64
+		formatString: 0
+		lineageTag: 92c1bed7-4b3e-4eec-b8f6-8308f4f08fc9
+		summarizeBy: none
+		sourceColumn: ID Usuario
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nome Usuario'
+		dataType: string
+		lineageTag: 437e1821-0606-4a9c-94c2-a281a0e16cb0
+		summarizeBy: none
+		sourceColumn: Nome Usuario
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sexo
+		dataType: string
+		lineageTag: f4d329d0-5e52-4b12-8bfb-414a1905609f
+		summarizeBy: none
+		sourceColumn: Sexo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Data de Nascimento'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 33083ac4-cf42-4b54-bada-b6c514bea401
+		summarizeBy: none
+		sourceColumn: Data de Nascimento
+
+		variation Variation
+			isDefault
+			relationship: 6fbccbe1-b388-4d84-b009-6297897bbc57
+			defaultHierarchy: LocalDateTable_5e5a4045-8306-4b1f-afe1-0627f00f5894.'Hierarquia de datas'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Data de inscrição'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: a3b0dea6-44ec-4093-a834-4fce9a914af8
+		summarizeBy: none
+		sourceColumn: Data de inscrição
+
+		variation Variation
+			isDefault
+			relationship: 5d92c3de-03df-44c7-995c-70105caa8dba
+			defaultHierarchy: LocalDateTable_b508caac-4af4-4b83-bc74-38dd08bde381.'Hierarquia de datas'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Img = IF( dUsuario[Sexo]  = "M", "https://www.iaudit.com.br/wp-content/uploads/2024/02/atendente-de-telemarketing-1024x683-1.jpg", "https://st5.depositphotos.com/62628780/65751/i/1600/depositphotos_657518066-stock-photo-virtual-assistant-portrait-happy-black.jpg")
+		lineageTag: 0457f086-8a66-4f28-b3ff-aee9a4c417c5
+		dataCategory: ImageUrl
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Desempate = RANKX( dUsuario, dUsuario[Nome Usuario],, DESC)/10000
+		lineageTag: 845aebbc-34f9-451c-86a3-ecb98f377582
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition dUsuario = m
+		mode: import
+		source =
+				let
+				    Fonte = Excel.Workbook(File.Contents("C:\Users\Jaine\Documents\4. SAC\Base SAC.xlsx"), null, true),
+				    dUsuario_Table = Fonte{[Item="dUsuario",Kind="Table"]}[Data],
+				    #"Tipo Alterado" = Table.TransformColumnTypes(dUsuario_Table,{{"ID Usuario", Int64.Type}, {"Nome Usuario", type text}, {"Sexo", type text}, {"Data de Nascimento", type date}, {"Data de inscrição", type date}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

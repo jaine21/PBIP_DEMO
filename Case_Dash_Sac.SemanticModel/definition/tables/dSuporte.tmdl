@@ -1,0 +1,64 @@
+table dSuporte
+	lineageTag: 94e92cc7-5009-4a9b-b754-6f3d15a17534
+
+	column 'ID Suporte'
+		dataType: int64
+		formatString: 0
+		lineageTag: 923c218f-df96-4d7c-9107-ec5f613f6112
+		summarizeBy: none
+		sourceColumn: ID Suporte
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nome Cliente'
+		dataType: string
+		lineageTag: 99987608-a358-4ce9-ad71-13875d41a5f9
+		summarizeBy: none
+		sourceColumn: Nome Cliente
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sexo
+		dataType: string
+		lineageTag: 0bcc63b1-012b-43ff-b9af-49da5dd57678
+		summarizeBy: none
+		sourceColumn: Sexo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Data de Nascimento'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: c70ade74-3b09-48a7-944f-f7b154e9924d
+		summarizeBy: none
+		sourceColumn: Data de Nascimento
+
+		variation Variation
+			isDefault
+			relationship: 13ff509f-6e6a-458a-9360-ee839171d598
+			defaultHierarchy: LocalDateTable_a882fd38-3125-4433-bbd6-c7815e3808b7.'Hierarquia de datas'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition dSuporte = m
+		mode: import
+		source =
+				let
+				    Fonte = Excel.Workbook(File.Contents("C:\Users\Jaine\Documents\4. SAC\Base SAC.xlsx"), null, true),
+				    dSuporte_Table = Fonte{[Item="dSuporte",Kind="Table"]}[Data],
+				    #"Tipo Alterado" = Table.TransformColumnTypes(dSuporte_Table,{{"ID Suporte", Int64.Type}, {"Nome Cliente", type text}, {"Sexo", type text}, {"Data de Nascimento", type date}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_ResultType = Table
+

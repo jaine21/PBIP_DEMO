@@ -1,0 +1,9 @@
+{
+  "version": "4.0",
+  "datasetReference": {
+    "byPath": {
+      "path": "../Case_Dash_Sac.SemanticModel"
+    },
+    "byConnection": null
+  }
+}

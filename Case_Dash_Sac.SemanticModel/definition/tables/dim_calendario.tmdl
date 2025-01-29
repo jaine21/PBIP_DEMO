@@ -1,0 +1,80 @@
+table dim_calendario
+	lineageTag: 919cfd32-0e63-4bac-8598-ed74812dfa2e
+
+	column Data
+		formatString: Short Date
+		lineageTag: 1953259c-c04a-485c-976c-79747866cf0f
+		summarizeBy: none
+		sourceColumn: [Date]
+
+		variation Variation
+			isDefault
+			relationship: ba0eab13-2a06-474e-b49c-117974f535e6
+			defaultHierarchy: LocalDateTable_7166c72c-96aa-4ad2-aaa2-84ee01d6a38a.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Sigla Mês' =
+			
+			FORMAT(dim_calendario[Data] , "MMM" )
+		lineageTag: 79c7f490-40ba-46d1-8a72-1785dc351de5
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Numero Mês' = MONTH(dim_calendario[Data])
+		formatString: 0
+		lineageTag: d260f3ae-4081-4b9a-939a-464d48678cc8
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Classificação = 100*YEAR(dim_calendario[Data])+MONTH(dim_calendario[Data])
+		formatString: 0
+		lineageTag: ff8910b4-eecb-4555-bc89-b30a0a0b7d3c
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mes/Ano_Nome =
+			
+			FORMAT(dim_calendario[Data],"MMM") & "/" & FORMAT(dim_calendario[Data],"YY")
+		lineageTag: 595d9a58-92cc-45f9-9df3-293cd5cf7af5
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nome do Dia Semana' = ```
+			
+			SWITCH(
+			    WEEKDAY(dim_calendario[Data]),
+			    1, "1-Dom",
+			    2, "2-Seg",
+			    3, "3-Ter",
+			    4, "4-Qua",
+			    5, "5-Qui",
+			    6, "6-Sex",
+			    7, "7-Sáb"
+			)
+			
+			```
+		lineageTag: 9049a696-d0ff-40a3-b7d5-84d660306a12
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Dia = DAY(dim_calendario[Data])
+		formatString: 0
+		lineageTag: 104716fd-692c-4a52-9849-bcbaa2c4947a
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_calendario = calculated
+		mode: import
+		source = CALENDAR(MIN(fOcorrencias[Data Chamado]), MAX(fOcorrencias[Data Chamado]))
+
+	annotation PBI_Id = 5fa6303ef0924202b89186ef03801b80
+

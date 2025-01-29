@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Case_Dash_Sac"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "5033d61b-bd25-4473-81a0-3a1baad292e8"
+  }
+}

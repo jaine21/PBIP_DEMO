@@ -1,0 +1,46 @@
+relationship 13ff509f-6e6a-458a-9360-ee839171d598
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dSuporte.'Data de Nascimento'
+	toColumn: LocalDateTable_a882fd38-3125-4433-bbd6-c7815e3808b7.Date
+
+relationship 6fbccbe1-b388-4d84-b009-6297897bbc57
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dUsuario.'Data de Nascimento'
+	toColumn: LocalDateTable_5e5a4045-8306-4b1f-afe1-0627f00f5894.Date
+
+relationship 5d92c3de-03df-44c7-995c-70105caa8dba
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dUsuario.'Data de inscrição'
+	toColumn: LocalDateTable_b508caac-4af4-4b83-bc74-38dd08bde381.Date
+
+relationship 147e7c30-4152-4601-96f5-fe07b55ba569
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fOcorrencias.'Data Resposta'
+	toColumn: LocalDateTable_321f35f5-eb98-4364-a70d-0c2181356c7c.Date
+
+relationship AutoDetected_1bcdc106-e9ba-4db8-9682-4bf69abb309f
+	fromColumn: fOcorrencias.'ID Problema'
+	toColumn: dProblema.'ID problema'
+
+relationship AutoDetected_f439a2c0-73bf-483a-960f-0bffdbea9f89
+	fromColumn: fOcorrencias.'ID Suporte'
+	toColumn: dSuporte.'ID Suporte'
+
+relationship AutoDetected_44bd3968-7764-4c8b-818d-43234490f6c5
+	fromColumn: fOcorrencias.'ID Usuario'
+	toColumn: dUsuario.'ID Usuario'
+
+relationship ba0eab13-2a06-474e-b49c-117974f535e6
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_calendario.Data
+	toColumn: LocalDateTable_7166c72c-96aa-4ad2-aaa2-84ee01d6a38a.Date
+
+relationship 1058bad3-382d-997b-eb22-161bed8c1ce3
+	fromColumn: fOcorrencias.'Data Chamado'
+	toColumn: dim_calendario.Data
+
+relationship 8e862388-d88e-448b-8590-ab62ec382363
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Atualizacao.Atualizacao
+	toColumn: LocalDateTable_65bb01f2-9cc6-4492-a563-26a80f276b29.Date
+

@@ -1,0 +1,243 @@
+table _Medidas
+	lineageTag: e095547b-4d5f-4adb-86dc-2efdbe52b088
+
+	measure 'Qtd ticket' = COUNT(fOcorrencias[ID Suporte])
+		formatString: #,0
+		displayFolder: Quantidades
+		lineageTag: a508b404-e15d-4f5e-9959-ec89795d1728
+
+		changedProperty = IsHidden
+
+	measure 'Qtd ticket cancelado' = CALCULATE( [Qtd ticket], FILTER( fOcorrencias, fOcorrencias[Status] = "Cancelado"))
+		formatString: #,0
+		displayFolder: Quantidades
+		lineageTag: dff2ec2d-8e8b-4354-8e23-edf25129661a
+
+		changedProperty = IsHidden
+
+	measure 'Qtd ticket encerrado' = CALCULATE( [Qtd ticket], FILTER( fOcorrencias, fOcorrencias[Status] = "Encerrado"))
+		formatString: #,0
+		displayFolder: Quantidades
+		lineageTag: 1f505457-39f0-4d18-93a0-0324d56fde69
+
+		changedProperty = IsHidden
+
+	measure 'Qtd ticket aberto' = CALCULATE( [Qtd ticket], FILTER( fOcorrencias, fOcorrencias[Status] = "Aguardando resposta do usuário"))
+		formatString: #,0
+		displayFolder: Quantidades
+		lineageTag: 0885bd3d-eeb1-4b9a-bacd-762daa4ff989
+
+		changedProperty = IsHidden
+
+	measure 'Tempo medio resposta' =
+			
+			FORMAT( DIVIDE( SUM(fOcorrencias[Tempo Resposta (s)]),[Qtd ticket]) , "hh:mm" )
+		displayFolder: Media
+		lineageTag: f2f2a4d6-2d15-406d-b5f3-76aede6764be
+
+		changedProperty = IsHidden
+
+	measure '% Encerrado' = DIVIDE([Qtd ticket encerrado], [Qtd ticket])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: %
+		lineageTag: 644e9c14-e400-4f73-a25c-a75d7364852d
+
+		changedProperty = IsHidden
+
+	measure '% Cancelado' = DIVIDE([Qtd ticket cancelado], [Qtd ticket])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: %
+		lineageTag: bd6d4960-a82f-4c12-8aa0-217f31164cee
+
+		changedProperty = IsHidden
+
+	measure '% Aberto' = DIVIDE([Qtd ticket aberto], [Qtd ticket])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: %
+		lineageTag: 3e43fb20-b190-49ff-b21c-689a0a2daa5f
+
+		changedProperty = IsHidden
+
+	measure 'Dias Trabalhados Total' = ```
+			DISTINCTCOUNT(fOcorrencias[Data Chamado]) 
+			
+			```
+		formatString: #,0
+		displayFolder: Hrs Homem
+		lineageTag: cb70612a-cba1-44f4-88f7-b250073d6c9b
+
+		changedProperty = IsHidden
+
+	measure 'Qtd Atendente' = DISTINCTCOUNT(fOcorrencias[ID Usuario])
+		formatString: 0
+		displayFolder: Quantidades
+		lineageTag: cf204a8d-8fb9-4cef-83fa-d4ff1b7fb82d
+
+		changedProperty = IsHidden
+
+	measure 'Quantidade de atendimento do Melhor Colaborador' = ```
+			
+			CALCULATE(MAXX(ALL(dUsuario[Nome Usuario], dUsuario[Img]), [Qtd ticket]))
+			
+			```
+		formatString: 0
+		displayFolder: Quantidades
+		lineageTag: 30bc6a6e-848c-4347-852c-b6129b12f2eb
+
+		changedProperty = IsHidden
+
+	measure '%Melhor Colaborador vs Equipe' =
+			(IF([Qtd ticket] = BLANK(), BLANK(),
+			IF([Qtd ticket] >= [Quantidade de atendimento do Melhor Colaborador],1, DIVIDE([Qtd ticket], [Quantidade de atendimento do Melhor Colaborador] ))))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: %
+		lineageTag: 509aaa5c-2965-48b1-b86c-db656b9c0b28
+
+		changedProperty = IsHidden
+
+	measure '% Realizado' = DIVIDE([Qtd ticket encerrado], [Qtd ticket])
+		displayFolder: %
+		lineageTag: e21a75b5-70ab-4c17-8480-4e0723d6c122
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Top 1 atendente' =
+			
+			var vTop1 = CALCULATE (
+			    SELECTEDVALUE( dUsuario[Nome Usuario]),
+			    FILTER ( ALLSELECTED(dUsuario[Nome Usuario]), [Rank Geral] = 1 )
+			)
+			RETURN
+			IF(vTop1 = BLANK(), "Sem Classificado", vTop1)
+		displayFolder: Rank
+		lineageTag: 212f3639-99b4-4dfc-ad66-91eec6e8f7af
+		dataCategory: WebUrl
+
+		changedProperty = IsHidden
+
+	measure 'Rank Geral' = ```
+			
+			 RANKX( ALLSELECTED(dUsuario[Img], dUsuario[Nome Usuario]), ([Qtd ticket] + CALCULATE( SUM(dUsuario[Desempate]))))
+			```
+		formatString: 0
+		displayFolder: Rank
+		lineageTag: 25f859ce-a50c-4649-aa4b-a87370a62072
+
+		changedProperty = IsHidden
+
+	measure 'Top 2 atendente' =
+			
+			var vTop1 = CALCULATE (
+			    SELECTEDVALUE ( dUsuario[Nome Usuario]),
+			    FILTER ( ALLSELECTED ( dUsuario[Nome Usuario]), [Rank Geral] = 2 )
+			)
+			RETURN
+			IF(vTop1 = BLANK(), "Sem Classificado", vTop1)
+		displayFolder: Rank
+		lineageTag: 9d5f4bb4-88e2-43de-9d59-ee1fc6a285d0
+
+		changedProperty = IsHidden
+
+	measure 'Top 3 atendente' =
+			
+			var vTop1 = CALCULATE (
+			    SELECTEDVALUE ( dUsuario[Nome Usuario]),
+			    FILTER ( ALLSELECTED ( dUsuario[Nome Usuario]), [Rank Geral] = 3 )
+			)
+			RETURN
+			IF(vTop1 = BLANK(), "Sem Classificado", vTop1)
+		displayFolder: Rank
+		lineageTag: fe4a3f18-42bb-4a46-9051-cba63a5616a9
+
+		changedProperty = IsHidden
+
+	measure 'Top 1 img_atendente' = ```
+			
+			VAR vTop1 = 
+			    CALCULATE(
+			      SELECTEDVALUE(dUsuario[Img]),
+			        FILTER(
+			            ALLSELECTED(dUsuario[Nome Usuario]),
+			            [Rank Geral] = 1
+			        )
+			    )
+			RETURN
+			vTop1
+			
+			```
+		displayFolder: Rank
+		lineageTag: dd68cf7e-2542-45f2-8a59-2722df8df365
+		dataCategory: ImageUrl
+
+		changedProperty = IsHidden
+
+	measure 'Top 2 img_atendente' =
+			
+			var vTop1 = CALCULATE (
+			    SELECTEDVALUE ( dUsuario[Img]),
+			    FILTER ( ALLSELECTED ( dUsuario[Nome Usuario]), [Rank Geral] = 2 )
+			)
+			RETURN
+			vTop1
+		displayFolder: Rank
+		lineageTag: 3f066224-798c-4d24-8008-91976905c5dd
+
+		changedProperty = IsHidden
+
+	measure 'Top 3 img_atendente' = ```
+			
+			VAR vTop1 = 
+			    CALCULATE(
+			        SELECTEDVALUE(dUsuario[Img]),
+			        FILTER(
+			            ALLSELECTED(dUsuario[Nome Usuario]),
+			            [Rank Geral] = 3
+			        )
+			    )
+			RETURN
+			vTop1
+			
+			```
+		displayFolder: Rank
+		lineageTag: 9f87aeec-1123-42c8-b92e-a3a070f37428
+
+		changedProperty = IsHidden
+
+	measure 'Qtd ticket ano anterior' = CALCULATE( [Qtd ticket], SAMEPERIODLASTYEAR(dim_calendario[Data]))
+		formatString: 0
+		displayFolder: Quantidades
+		lineageTag: c935362d-44df-40bb-89a2-a8472ff2a2be
+
+		changedProperty = IsHidden
+
+	measure '%Ticket YOY' = DIVIDE( ([Qtd ticket] - [Qtd ticket ano anterior]), [Qtd ticket ano anterior])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: %
+		lineageTag: f5355107-a456-43b5-bbc0-3ca47ae00242
+
+		changedProperty = IsHidden
+
+	column 'Coluna 1'
+		dataType: string
+		isHidden
+		lineageTag: d92b8393-1275-4f74-bd5f-f702be2db4a4
+		summarizeBy: none
+		sourceColumn: Coluna 1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Medidas = m
+		mode: import
+		source =
+				let
+				    Fonte = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#"Coluna 1" = _t]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"Coluna 1", type text}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,104 @@
+table fOcorrencias
+	lineageTag: 9e18eccb-0379-4d5c-ad67-6577aa68551d
+
+	column 'Data Chamado'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: cec52e06-eb8a-43ad-85cb-51a783cb7837
+		summarizeBy: none
+		sourceColumn: Data Chamado
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Data Resposta'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 1db4f160-4789-49d7-8e98-2ea056899b41
+		summarizeBy: none
+		sourceColumn: Data Resposta
+
+		variation Variation
+			isDefault
+			relationship: 147e7c30-4152-4601-96f5-fe07b55ba569
+			defaultHierarchy: LocalDateTable_321f35f5-eb98-4364-a70d-0c2181356c7c.'Hierarquia de datas'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Tempo Resposta (s)'
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 32bd92d7-4bd8-4c51-a0be-5c13a4280ef0
+		summarizeBy: none
+		sourceColumn: Tempo Resposta (s)
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column 'ID Usuario'
+		dataType: int64
+		formatString: 0
+		lineageTag: 7881ffda-55bf-4b5d-a3c2-8c52de5dfbeb
+		summarizeBy: none
+		sourceColumn: ID Usuario
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ID Suporte'
+		dataType: int64
+		formatString: 0
+		lineageTag: 3daf9ccf-acb0-4452-b438-1f530ab2d143
+		summarizeBy: none
+		sourceColumn: ID Suporte
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ID Problema'
+		dataType: int64
+		formatString: 0
+		lineageTag: 266e4912-f7d2-40e6-b000-267e8fe73e56
+		summarizeBy: none
+		sourceColumn: ID Problema
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: 55785c91-edf6-4586-8700-499bca66a87a
+		summarizeBy: none
+		sourceColumn: Status
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fOcorrencias = m
+		mode: import
+		source =
+				let
+				    Fonte = Excel.Workbook(File.Contents("C:\Users\Jaine\Documents\4. SAC\Base SAC.xlsx"), null, true),
+				    fOcorrencias_Table = Fonte{[Item="fOcorrencias",Kind="Table"]}[Data],
+				    #"Tipo Alterado" = Table.TransformColumnTypes(fOcorrencias_Table,{{"Data Chamado", type date}, {"Data Resposta", type date}, {"Tempo Resposta (s)", type time}, {"ID Usuario", Int64.Type}, {"ID Suporte", Int64.Type}, {"ID Problema", Int64.Type}, {"Status", type text}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

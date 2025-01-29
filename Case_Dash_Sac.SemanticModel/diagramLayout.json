@@ -1,0 +1,117 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 10,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 337.59766976481706,
+            "y": 678.38212177115361
+          },
+          "nodeIndex": "dProblema",
+          "nodeLineageTag": "9bb37be5-662b-432a-9f25-1f877ba2e7b5",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 1,
+          "expandedHeight": 128
+        },
+        {
+          "location": {
+            "x": 343.18987705539348,
+            "y": 0
+          },
+          "nodeIndex": "dSuporte",
+          "nodeLineageTag": "94e92cc7-5009-4a9b-b754-6f3d15a17534",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 2,
+          "expandedHeight": 176
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 262.62244314164093
+          },
+          "nodeIndex": "dUsuario",
+          "nodeLineageTag": "5656a8be-6ce1-4bf7-9a77-c66f3d5bf68e",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 3,
+          "expandedHeight": 200
+        },
+        {
+          "location": {
+            "x": 350.5352730004555,
+            "y": 297
+          },
+          "nodeIndex": "fOcorrencias",
+          "nodeLineageTag": "9e18eccb-0379-4d5c-ad67-6577aa68551d",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 1062.5976697648171,
+            "y": 16.5
+          },
+          "nodeIndex": "_Medidas",
+          "nodeLineageTag": "e095547b-4d5f-4adb-86dc-2efdbe52b088",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 736.597669764817,
+            "y": 224.5
+          },
+          "nodeIndex": "dim_calendario",
+          "nodeLineageTag": "919cfd32-0e63-4bac-8598-ed74812dfa2e",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 6,
+          "expandedHeight": 200
+        },
+        {
+          "location": {
+            "x": 1062.5976697648171,
+            "y": 149.1910608855768
+          },
+          "nodeIndex": "Atualizacao",
+          "nodeLineageTag": "7a9fdb45-045e-4e82-8f1c-a5d495e0f4bb",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Todas as tabelas",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Todas as tabelas",
+  "defaultDiagram": "Todas as tabelas"
+}

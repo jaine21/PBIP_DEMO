@@ -1,0 +1,31 @@
+table Atualizacao
+	lineageTag: 7a9fdb45-045e-4e82-8f1c-a5d495e0f4bb
+
+	column Atualizacao
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: c22adb50-736f-4070-8a29-f8b0a468de03
+		summarizeBy: none
+		sourceColumn: Atualizacao
+
+		variation Variation
+			isDefault
+			relationship: 8e862388-d88e-448b-8590-ab62ec382363
+			defaultHierarchy: LocalDateTable_65bb01f2-9cc6-4492-a563-26a80f276b29.'Hierarquia de datas'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Atualizacao = m
+		mode: import
+		source =
+				let
+				    Fonte = DateTimeZone.SwitchZone(DateTimeZone.LocalNow(),-3)
+				in
+				    Fonte
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = DateTimeZone
+
