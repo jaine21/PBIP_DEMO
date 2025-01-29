@@ -12,8 +12,6 @@ Abra o terminal ou prompt de comando e navegue até a pasta criada.
 
 Use o comando git init para inicializar um repositório Git na pasta.
 
-bash
-Copy
 cd C:\Users\SeuUsuario\Documents\PBIP_DEMO
 git init
 #### 3. Adicione o Arquivo .pbip ao Repositório
@@ -22,14 +20,11 @@ Copie o arquivo .pbip e outros arquivos relacionados para a pasta do repositóri
 #### 4. Adicione os Arquivos ao Git
 Use o comando git add . para adicionar todos os arquivos da pasta ao controle de versão.
 
-bash
-Copy
 git add .
+
 #### 5. Faça o Commit das Alterações
 Faça um commit das alterações com uma mensagem descritiva.
 
-bash
-Copy
 git commit -m "Adicionado arquivo .pbip ao repositório"
 #### 6. Crie um Repositório no GitHub
 - Se você ainda não tem um repositório, crie um novo no GitHub.
